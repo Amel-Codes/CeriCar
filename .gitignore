@@ -1,0 +1,8 @@
+/vendor/
+/assets/
+/runtime/
+yii.bat
+.DS_Store
+*.log
+*.lock
+.env

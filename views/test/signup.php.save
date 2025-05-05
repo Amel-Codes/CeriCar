@@ -1,0 +1,78 @@
+<?php
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+?>
+<div class="container">
+    <h1>Inscription</h1>
+    <!-- Formulaire d'inscription -->
+    <?php $form = ActiveForm::begin([
+        'method' => 'post',
+        'action' => ['site/signup'], // Assurez-vous que l'URL est correcte
+        'options' => ['class' => 'signup-form', 'id' => 'signup-form'],  // Classe CSS personnalisée
+    ]); ?>
+    
+    <div class="form-group">
+        <?= $form->field($model, 'pseudo')->textInput([
+            'placeholder' => 'Votre pseudo',
+            'class' => 'form-control',
+        ])->label('Pseudo') ?>
+    </div>
+
+    <div class="form-group">
+        <?= $form->field($model, 'email')->input('email', [
+            'placeholder' => 'exemple@domaine.com',
+            'class' => 'form-control',
+        ])->label('Email') ?>
+    </div>
+
+    <div class="form-group">
+        <?= $form->field($model, 'password')->passwordInput([
+            'placeholder' => 'Mot de passe',
+            'class' => 'form-control',
+        ])->label('Mot de passe') ?>
+    </div>
+    
+    <div class="form-group">
+        <?= $form->field($model, 'nom')->textInput([
+            'placeholder' => 'Votre nom',
+            'class' => 'form-control',
+        ])->label('Nom') ?>
+    </div>
+  
+    <div class="form-group">
+        <?= $form->field($model, 'prenom')->textInput([
+            'placeholder' => 'Votre prénom',
+            'class' => 'form-control',
+        ])->label('Prénom') ?>
+    </div>
+   
+    <div class="form-group">
+        <?= $form->field($model, 'url photo')->textInput([
+            'placeholder' => 'URL vers votre photo de profil',
+            'class' => 'form-control',
+        ])->label('Photo de profil') ?>
+    </div>
+
+    <div class="form-group">
+        <?= $form->field($model, 'permis')->textInput([
+            'placeholder' => '999999999999',
+            'class' => 'form-control',
+        ])->label('Numéro de permis') ?>
+    </div>
+
+    <div class="form-group btn-group">
+        <?= Html::submitButton('S\'inscrire', ['class' => 'btn btn-primary']) ?>
+    </div>
+    
+    <?php ActiveForm::end(); ?>
+    
+    <!-- Bandeau de notification -->
+    <div id="notification-banner" class="d-none"></div> <!-- Caché par défaut -->
+    
+</div>
+
+<?php
+// Ajouter un fichier JS qui gère l'Ajax pour l'inscription
+$this->registerJsFile('@web/js/signup.js', ['depends' => [yii\web\JqueryAsset::class]]);
+?>
+

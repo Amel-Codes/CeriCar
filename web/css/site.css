@@ -1,0 +1,318 @@
+main > .container {
+    padding: 70px 15px 20px;
+}
+.footer {
+    background-color: #f5f5f5;
+    font-size: .9em;
+    height: 60px;
+}
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.not-set {
+    color: #c55;
+    font-style: italic;
+}
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {
+    content: '';
+    left: 3px;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: solid 5px transparent;
+    margin: 4px 4px 2px 4px;
+    background: transparent;
+}
+a.asc:after {
+    border-bottom: solid 7px #212529;
+    border-top-width: 0;
+}
+a.desc:after {
+    border-top: solid 7px #212529;
+    border-bottom-width: 0;
+}
+.grid-view th {
+    white-space: nowrap;
+}
+.hint-block {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+}
+
+.error-summary {
+    color: #a94442;
+    background: #fdf7f7;
+    border-left: 3px solid #eed3d7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
+/* align the logout "link" (button in form) of the navbar */
+.nav li > form > button.logout {
+    padding-top: 7px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+@media(max-width:767px) {
+    .nav li > form > button.logout {
+        display:block;
+        text-align: left;
+        width: 100%;
+        padding: 10px 0;
+    }
+}
+
+.nav > li > form > button.logout:focus,
+.nav > li > form > button.logout:hover {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.nav > li > form > button.logout:focus {
+    outline: none;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+
+
+/* --- Menu de navigation --- */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #444; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /*Ombre ajoutée*/
+}
+
+#notification-banner {
+    position: fixed; /*pour qu'il reste en haut et s'affiche au-dessus des autres éléments */
+    top: 70px; /* Espace ss le menu fixe */
+    left: 0;
+    width: 100%; /* Largeur du bandeau de gauche à droite */
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 8px; /*coins arrondis */
+    background: rgba(0, 0, 0, 0.5); /*fond semi-transparent */
+    color: white; /*texte en blanc */
+    display: none; /*masqué par défaut */
+    z-index: 1000; /*pour être au-dessus des autres éléments */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre douce pour l'effet */
+    transition: opacity 0.5s ease, transform 0.5s ease; /*transition douce pour l'apparition et disparition */
+}
+
+/* Réglez les couleurs de chq type de notification */
+#notification-banner.alert-success {
+    background: rgba(76, 175, 80, 0.7); /* Vert clair avec transparence */
+    border: 1px solid #4CAF50; /*bordure verte */
+}
+
+#notification-banner.alert-warning {
+    background: rgba(255, 193, 7, 0.7); 
+    border: 1px solid #FFC107;
+}
+
+#notification-banner.alert-error {
+    background: rgba(244, 67, 54, 0.7);
+    border: 1px solid #F44336; 
+}
+
+h1 {
+    margin-top: 0.5cm; /*ajuster la marge du titre*/
+}
+
+.voyage-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.voyage-card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+
+.voyage-complet {
+    background-color: #ffdddd; /* fond rouge clair pour 1 voyage complet */
+    border: 1px solid #ff0000; /*bordure rouge */
+}
+
+.voyage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.voyage-header h3 {
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.voyage-email {
+    color: #777;
+    font-size: 0.9em;
+}
+
+.voyage-info {
+    font-size: 0.95em;
+    color: #333;
+}
+
+.voyage-info div {
+    margin-bottom: 8px;
+}
+
+.voyage-info strong {
+    color: #444;
+}
+
+/*.voyage-complet-message {
+    color: #ff0000; Rouge pour le message de voyage complet 
+    font-weight: bold;
+    margin-top: 10px;
+}*/
+
+/* Conteneur principal du formulaire */
+.search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;  /* espacement entre les champs */
+    max-width: 100%;
+    margin-top: 50px;
+    padding: 10px 30px;
+    background-color: rgba(240, 240, 240, 0.8); /*fond clair avec transparence */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+    width: 100%;
+    box-sizing: border-box;
+}
+/* Adaptabilité sur mobile */
+/*@media (max-width: 768px) {
+    .search-form {
+        width: 90%;  formulaire occupe 90% de la largeur sur mobile 
+    }
+}*/
+
+/* pour les champs de formulaire */
+.search-form .form-group {
+    flex: 1; /* ils occupent l'espace dispo */
+    display: flex;
+    flex-direction: column; /*met les champs en colonne pour que le label et le champ de saisie soient l'un au-dessus de l'autre */
+    gap: 5px; /* Espacement entre le label et le champ */
+}
+
+.search-form .form-control {
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    height: 45px;
+    box-sizing: border-box;
+}
+
+/*bouton de recherche */
+.search-form .btn {
+    padding: 12px 25px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+/*bouton hover */
+.search-form .btn:hover {
+    background-color: #0056b3;
+}
+
+/* Adaptabilité sur mobile */
+@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+        gap: 20px;
+        padding: 15px;
+    }
+    .search-form .btn {
+        width: 100%;
+    }
+}
+
+
+
+/*
+.signup-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    max-width: 100%;
+    margin-top: 50px;
+    padding: 10px 30px;
+    background-color: rgba(240, 240, 240, 0.8); 
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.signup-form .form-group {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.signup-form .btn {
+    padding: 12px 25px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.signup-form .btn:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .signup-form {
+        flex-direction: column;
+        gap: 20px;
+        padding: 15px;
+    }
+    .signup-form .btn {
+        width: 100%;
+    }
+}
+*/

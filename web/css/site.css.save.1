@@ -1,0 +1,235 @@
+main > .container {
+    padding: 70px 15px 20px;
+}
+.footer {
+    background-color: #f5f5f5;
+    font-size: .9em;
+    height: 60px;
+}
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.not-set {
+    color: #c55;
+    font-style: italic;
+}
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {
+    content: '';
+    left: 3px;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: solid 5px transparent;
+    margin: 4px 4px 2px 4px;
+    background: transparent;
+}
+a.asc:after {
+    border-bottom: solid 7px #212529;
+    border-top-width: 0;
+}
+a.desc:after {
+    border-top: solid 7px #212529;
+    border-bottom-width: 0;
+}
+.grid-view th {
+    white-space: nowrap;
+}
+.hint-block {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+}
+
+.error-summary {
+    color: #a94442;
+    background: #fdf7f7;
+    border-left: 3px solid #eed3d7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
+/* align the logout "link" (button in form) of the navbar */
+.nav li > form > button.logout {
+    padding-top: 7px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+@media(max-width:767px) {
+    .nav li > form > button.logout {
+        display:block;
+        text-align: left;
+        width: 100%;
+        padding: 10px 0;
+    }
+}
+
+.nav > li > form > button.logout:focus,
+.nav > li > form > button.logout:hover {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.nav > li > form > button.logout:focus {
+    outline: none;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+
+/* --- Menu de navigation --- */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #444; /* Plus clair que #333 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ombre ajoutée */
+}
+
+#notification-banner {
+    position: fixed; /* Pour qu'il reste en haut et s'affiche au-dessus des autres éléments */
+    top: 70px; /* Espace sous le menu fixe */
+    left: 0; /* Placer le bandeau à gauche */
+    width: 100%; /* Largeur du bandeau de gauche à droite */
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 8px; /* Coins arrondis */
+    background: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+    color: white; /* Texte en blanc */
+    display: none; /* Masqué par défaut */
+    z-index: 1000; /* Pour être au-dessus des autres éléments */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre douce pour l'effet */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Transition douce pour l'apparition et disparition */
+}
+
+/* Réglez les couleurs spécifiques de chaque type de notification */
+#notification-banner.alert-success {
+    background: rgba(76, 175, 80, 0.7); /* Vert clair avec transparence */
+    border: 1px solid #4CAF50; /* Bordure verte */
+}
+
+#notification-banner.alert-warning {
+    background: rgba(255, 193, 7, 0.7); /* Jaune clair avec transparence */
+    border: 1px solid #FFC107; /* Bordure jaune */
+}
+
+#notification-banner.alert-error {
+    background: rgba(244, 67, 54, 0.7); /* Rouge avec transparence */
+    border: 1px solid #F44336; /* Bordure rouge */
+}
+
+
+h1 {
+    margin-top: 0.5cm; /* Ajuster la marge du titre spécifiquement sur la page de recherche */
+}
+
+.voyage-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.voyage-card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+
+.voyage-complet {
+    background-color: #ffdddd; /* Fond rouge clair pour signaler que le voyage est complet */
+    border: 1px solid #ff0000; /* Bordure rouge */
+}
+
+.voyage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.voyage-header h3 {
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.voyage-email {
+    color: #777;
+    font-size: 0.9em;
+}
+
+.voyage-info {
+    font-size: 0.95em;
+    color: #333;
+}
+
+.voyage-info div {
+    margin-bottom: 8px;
+}
+
+.voyage-info strong {
+    color: #444;
+}
+
+.voyage-complet-message {
+    color: #ff0000; /* Rouge pour le message de voyage complet */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Conteneur principal du formulaire */
+.search-form {
+    display: flex;
+    justify-content: flex-start; /* Aligne tous les éléments à gauche */
+    align-items: center; /* Aligne verticalement tous les éléments */
+    gap: 100px; /* Espacement uniforme entre les champs */
+    max-width: 100%;
+    margin-top: 50px;
+}
+
+/* Form-group pour les champs de formulaire */
+.search-form .form-group {
+    flex: 1; /* Les champs occupent l'espace disponible */
+    margin: 0; /* Supprime les marges externes */
+    display: flex;
+    align-items: center; /* Assure l'alignement vertical des champs */
+}
+
+/* Champs de formulaire */
+.search-form .form-control {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    height: 40px; /* Hauteur identique au bouton */
+    box-sizing: border-box; /* Assure que padding et bordures ne cassent pas l'alignement */
+}
+
+/* Bouton de recherche */
+.search-form .btn {
+    padding: 8px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    height: 40px; /* Assure que le bouton a la même hauteur que les champs */
+    display: flex;  
+    align-items: center; /* Aligne verticalement le texte dans le bouton */
+    justify-content: center; /* Centre horizontalement le texte */
+}
+
+/* Bouton hover */
+.search-form .btn:hover {
+    background-color: #0056b3;
+}

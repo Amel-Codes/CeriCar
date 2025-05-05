@@ -1,0 +1,223 @@
+<?php
+
+namespace app\controllers;
+
+use Yii;
+use yii\web\Controller;
+use app\models\Internaute;
+use app\models\Voyage;
+use app\models\Reservation;
+use app\models\Trajet;
+use app\models\SignupForm;
+use app\models\SigninForm;
+use yii\helpers\Html; //Utilisation des helpers de Yii
+use yii\web\Request; // classe qui gère l'accès aux données de la requête (POST, GET, cookies...)
+use yii\web\Response;
+
+class TestController extends Controller
+{   
+    //Lien utilisé pour le test: https://pedago.univ-avignon.fr/~uapv2400316/Basic_Yii/web/index.php?r=test/view&pseudo=....
+    //Action pour gérer la récupération des infos d'1 utilisateur à partir de son pseudo(Etape 2)
+    public function actionView($pseudo)
+    {
+        // Récupérer l'internaute par son pseudo
+        $internaute = Internaute::getUserByIdentifiant($pseudo);
+
+        // Si l'internaute n'existe pas, afficher un message d'erreur
+        if (!$internaute) {
+            return $this->renderContent("Internaute non trouvé.");
+        }
+        $voyages = [];
+        $reservations = [];
+        $voyages = $internaute->voyages; // Tous les voyages proposés par cet internaute
+        $reservations = $internaute->reservations; // Toutes les réservations effectuées par cet internaute
+        return $this->render('view', [
+            'internaute' => $internaute,
+            'voyages' => $voyages,
+            'reservations' => $reservations,
+        ]);
+    }
+    
+    //Action pour gérer la recherche (Partie3)   
+    /*public function actionSearch()
+    {
+       // Créer un modèle dynamique pour la recherche
+       $model = new \yii\base\DynamicModel(['villeDepart', 'villeArrivee', 'nbPersonnes']);
+       $model->addRule(['villeDepart', 'villeArrivee', 'nbPersonnes'], 'required'); // Validation de champs requis
+
+       $voyages = [];
+       // Lorsque la requête est postée, on charge les données et on effectue la recherche
+       if ($model->load(Yii::$app->request->post()) && $model->validate()) 
+            $voyages = Voyage::searchVoyages($model->villeDepart, $model->villeArrivee, $model->nbPersonnes);
+
+       return $this->render('search', [
+         'model' => $model,
+         'voyages' => $voyages,
+       ]);
+    }*/
+    //Partie 04
+    public function actionSearch()
+    {
+       $model = new \yii\base\DynamicModel(['villeDepart', 'villeArrivee', 'nbPersonnes']); // Créer un modèle dynamique avec les champs de recherche
+       $model->addRule(['villeDepart', 'villeArrivee', 'nbPersonnes'], 'required'); // Validation des champs requis
+       $model->addRule('nbPersonnes', 'integer'); // Validation de type pour 'nbPersonnes'
+       if (!$model->nbPersonnes) // Définir une valeur par défaut pour 'nbPersonnes'
+            $model->nbPersonnes = 1; // Valeur par défaut
+       if (Yii::$app->request->isAjax) {  // Vérifier si la requête est en AJAX (pour une recherche dynamique)
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) { // Charger les données du formulaire dans le modèle
+            $villeDepart = $model->villeDepart;
+            $villeArrivee = $model->villeArrivee;
+            $nbPersonnes = $model->nbPersonnes;
+            $result = Voyage::searchVoyages($villeDepart, $villeArrivee, $nbPersonnes); // Effectuer la recherche des voyages
+            return $this->asJson([  // Renvoyer la réponse au format JSON pour l'AJAX
+                'voyages' => $result['voyages'], // Résultats de la recherche
+                'notifications' => $result['notifications'], // Notifications, si besoin
+            ]);
+        } else 
+            return $this->asJson([  // Si la validation échoue, envoyer les erreurs de validation
+                'errors' => $model->errors,
+            ]);
+       }
+       return $this->render('search', [   // Rendre la vue si ce n'est pas une requête AJAX
+        'model' => $model,
+       ]);
+    }
+    
+    //Partie 05
+    public function actionSignup()
+    {
+      $model = new SignupForm(); // Créer le modèle SignupForm
+      $signupResult = null; // Initialisation pour éviter une erreur en cas d'échec
+
+      // Vérifiez si la requête est une requête AJAX
+      if (Yii::$app->request->isAjax) {   
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) { 
+            // Chargez les données envoyées et validez-les
+            $signupResult = $model->signup(); // Tentez l'inscription
+
+            if ($signupResult['notifications'][0]['type'] == 'success') {
+                // Redirection dans la réponse JSON
+                $signupResult['redirect'] = 'index.php?r=test/signin'; // URL vers la page de connexion
+            }
+        } else {
+             Yii::error('Le chargement des données a échoué.', 'debug');
+
+            // Si la validation échoue, ajoutez une notification d'erreur
+            $signupResult = [
+                'notifications' => [
+                    [
+                        'type' => 'error',
+                        'message' => 'La validation a échoué. Veuillez vérifier vos informations.',
+                    ],
+                ],
+            ];
+        }
+
+        // Retourner la réponse JSON via asJson()
+        return $this->asJson($signupResult);
+      }
+
+      // Si ce n'est pas une requête AJAX, affichez la vue signup
+      return $this->render('signup', [
+        'model' => $model,
+      ]);
+    }
+
+    public function actionSignin()
+    {
+      $model = new SigninForm();
+      $response = [];
+    
+      if (\Yii::$app->request->isAjax) {
+        if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
+            // Tenter de connecter l'utilisateur
+            if ($model->login()) {
+                // Si la connexion réussie, renvoyer une réponse JSON avec la redirection
+                $response = [
+                    'status' => 'success',
+                    'message' => 'Connexion réussie.',
+                    'redirect' => \Yii::$app->homeUrl, // Redirection vers la page d'accueil après connexion
+                ];
+            } else {
+                // Si la connexion échoue
+                $response = [
+                    'status' => 'error',
+                    'message' => 'Échec de la connexion. Vérifiez vos informations.',
+                    'errors' => $model->errors,
+                ];
+            }
+        } else {
+            // Validation échouée
+            $response = [
+                'status' => 'error',
+                'message' => 'Données invalides.',
+                'errors' => $model->errors,
+            ];
+        }
+
+        return $this->asJson($response);
+      }
+
+      // Si ce n'est pas une requête AJAX, renvoyer la vue de connexion
+      return $this->render('signin', ['model' => $model]);
+    }
+
+    public function actionReservations()
+    {
+      if (Yii::$app->user->isGuest) {
+        return $this->redirect(['test/signin']);
+      }
+
+      $userId = Yii::$app->user->id; // Identifiant de l'utilisateur connecté
+      $reservations = Réservation::find()
+        ->where(['id_internaute' => $userId]) // Correspond au champ de relation avec l'utilisateur
+        ->with('voyage') // Relation avec le modèle Voyage
+        ->all();
+
+      return $this->render('reservations', [
+        'reservations' => $reservations,
+      ]);   
+    }
+    
+    public function actionProfile()
+    {
+      if (Yii::$app->user->isGuest) {
+        return $this->redirect(['test/signin']);
+      }
+
+      $userId = Yii::$app->user->id; // Identifiant de l'utilisateur connecté
+      $user = Internaute::findOne($userId);
+
+      if (!$user) {
+        throw new \yii\web\NotFoundHttpException("Utilisateur introuvable.");
+      }
+
+      return $this->render('profile', [
+        'user' => $user,
+      ]);
+    }
+
+    public function actionPropositions()
+    {
+      if (Yii::$app->user->isGuest) {
+        return $this->redirect(['test/signin']);
+      }
+
+      $userId = Yii::$app->user->id; // Identifiant de l'utilisateur connecté
+      $propositions = Voyage::find()
+        ->where(['id_internaute' => $userId]) // Relation entre Voyage et Internaute
+        ->all();
+
+      return $this->render('propositions', [
+        'propositions' => $propositions,
+      ]);
+    }
+    
+    public function actionLogout()
+    {
+      Yii::$app->user->logout();
+      return $this->redirect(['test/signin']);    
+    }
+
+}
+?>
