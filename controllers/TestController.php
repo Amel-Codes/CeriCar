@@ -21,7 +21,7 @@ class TestController extends Controller
 
 /*********************************************Partie 02 (Les infos d'un internaute selon son pseudo)********************************************/
     
-    //Lien utilisé pour le test: https://pedago.univ-avignon.fr/~uapv2400316/Basic_Yii/web/index.php?r=test/view&pseudo=....
+    //Lien utilisé pour le test: https://pedago.univ-avignon.fr/~uapv-----/Basic_Yii/web/index.php?r=test/view&pseudo=....
     //Action pour gérer la récupération des infos d'1 utilisateur à partir de son pseudo(Etape 2)
     public function actionView($pseudo)
     {
@@ -42,34 +42,6 @@ class TestController extends Controller
             'reservations' => $reservations,
         ]);
     }
-    
-
-    /*public function actionSearch()
-    {
-       $model = new \yii\base\DynamicModel(['villeDepart', 'villeArrivee', 'nbPersonnes']); //créer un modèle dynamique (pas d'ajout de new model pour cet étape)
-       $model->addRule(['villeDepart', 'villeArrivee', 'nbPersonnes'], 'required'); 
-       $model->addRule('nbPersonnes', 'integer');
-
-       if (Yii::$app->request->isAjax) {  // (pour une recherche dynamique)
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) { //charger les données du formulaire dans model
-            $villeDepart = $model->villeDepart;
-            $villeArrivee = $model->villeArrivee;
-            $nbPersonnes = $model->nbPersonnes;
-
-            $result = Voyage::searchVoyages($villeDepart, $villeArrivee, $nbPersonnes); //effectuer la recherche
-            return $this->asJson([  //renvoyer la réponse au format JSON pour ajax
-                'voyages' => $result['voyages'], 
-                'notifications' => $result['notifications'], // Notifications, si besoin
-            ]);
-        } else 
-            return $this->asJson([  //si validation échouée
-                'errors' => $model->errors,
-            ]);
-       }
-       return $this->render('search', [   //rendre la vue si non requête ajax
-        'model' => $model,
-       ]);
-    }*/
 
 /*********************************************Parties 03 et 04 (Rechercher un voyage)*****************************************/
 
